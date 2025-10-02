@@ -44,14 +44,13 @@ df["clean_text"] = df["text"].apply(clean_text)
 
 
 #  Exploratory Analysis
-
 # Category distribution chart
 df["label"].value_counts().plot(kind="bar", title="Category Distribution")
 plt.xlabel("Category")
 plt.ylabel("Count")
 plt.tight_layout()
 plt.savefig("category_distribution.png")
-# plt.show()  # optional
+
 
 # Here are top 20 most frequent words
 all_words = " ".join(df["clean_text"]).split()
@@ -63,7 +62,6 @@ plt.xticks(rotation=45)
 plt.title("Top 20 Most Frequent Words")
 plt.tight_layout()
 plt.savefig("top_words.png")
-# plt.show()  # optional
 
 # Convert text to numbers and split dataset
 
@@ -81,7 +79,7 @@ nb_model = MultinomialNB()
 nb_model.fit(X_train, y_train)
 nb_preds = nb_model.predict(X_test)
 
-# Logistic Regression (just for comparison)
+# Logistic Regression (i have used this one too for comparison)
 lr_model = LogisticRegression(max_iter=1000)
 lr_model.fit(X_train, y_train)
 lr_preds = lr_model.predict(X_test)
@@ -106,7 +104,7 @@ disp.plot()
 plt.title("Confusion Matrix - Naive Bayes")
 plt.tight_layout()
 plt.savefig("confusion_matrix_nb.png")
-# plt.show()  # optional
+
 
 
 # Flask API

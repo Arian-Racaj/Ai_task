@@ -3,17 +3,13 @@
 This is a small AI/ML project where I built a model to classify SMS messages as **spam** or **ham** (not spam).  
 It also includes a simple **Flask API** so you can test your own messages.
 
----
-
 # Dataset
 
-I used the **UCI SMS Spam Collection** dataset:
+I used the _UCI SMS Spam Collection_ dataset:
 
-- 2 categories: `ham` and `spam`
-- Around 5,500 messages
-- Publicly available: [SMS Spam Collection Dataset](https://archive.ics.uci.edu/ml/datasets/SMS+Spam+Collection)
-
----
+2 categories: `ham` and `spam`
+Around 5,500 messages
+Publicly available: [SMS Spam Collection Dataset](https://archive.ics.uci.edu/ml/datasets/SMS+Spam+Collection)
 
 # Setup
 
@@ -56,7 +52,7 @@ Print evaluation metrics for both models
 2. Run Flask API
 
 python text_classification.py
-By default, the API runs on http://127.0.0.1:5000.
+By default, the API runs on http://127.0.0.1:5000
 
 curl -X POST http://127.0.0.1:5000/predict \
  -H "Content-Type: application/json" \
@@ -65,7 +61,6 @@ curl -X POST http://127.0.0.1:5000/predict \
 Example Response:
 
 json
-Copy code
 {
 "prediction": "spam",
 "confidence": 0.72
