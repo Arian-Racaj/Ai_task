@@ -66,3 +66,11 @@ json
 "confidence": 0.72
 }
 We can also send our own messages and see if they are classified as spam or ham so we can test it better with our own message.
+
+# Testing the model behavior
+
+Beyond the basic requirements, I conducted additional analysis to understand the model's behavior on challenging cases:
+
+Tested short messages (under 30 characters) from the dataset
+Analyzed how the model handles limited context
+Discovered insights about model performance on edge cases
