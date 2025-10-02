@@ -129,24 +129,51 @@ def predict():
 
     return jsonify({"prediction": prediction, "confidence": float(proba)})
 
+# Here i really wanted to do test some tricky examples from the dataset
+# to see how well the model performs on them and what insights we can get
 
-# I let this like an option for test messages
-
-def test_messages():
-    examples = [
-        "Free entry in a competition!",
-        "Hey, how are you today?",
-        "Win a free ticket now!",
-        "Don't forget our meeting at 3 PM."
-    ]
-    print("\nTesting example messages:")
-    for msg in examples:
-        pred = nb_model.predict(vectorizer.transform([clean_text(msg)]))[0]
-        print(f"Message: {msg} => Prediction: {pred}")
-
-
-#  Run API
-
+def analyze_tricky_dataset_examples():
+    
+    print("\n" + "="*60)
+    print("Challenging Dataset Examples")
+    print("="*60)
+    
+    # This will find the messages in the dataset that are SHORT and might be ambiguous
+    df['length'] = df['clean_text'].str.len()
+    short_messages = df[df['length'] < 30]  # We know that short messages can be tricky
+    
+    print(f"\nAnalyzing {len(short_messages)} short messages from dataset:")
+    print("-" * 50)
+    
+    # Test how our model performs on these tricky short messages
+    correct_predictions = 0
+    tricky_examples = []
+    
+    for idx, row in short_messages.head(8).iterrows(): 
+        original_text = row['text']
+        true_label = row['label']
+        
+        # See what our model predicts
+        pred = nb_model.predict(vectorizer.transform([row['clean_text']]))[0]
+        proba = nb_model.predict_proba(vectorizer.transform([row['clean_text']]))
+        confidence = proba.max()
+        
+    
+        is_correct = pred == true_label
+        status = "CORRECT" if is_correct else "WRONG"
+        correct_predictions += 1 if is_correct else 0
+        
+        if pred != true_label or confidence < 0.7:  # this will show low-confidence or wrong predictions
+            tricky_examples.append((original_text, true_label, pred, confidence))
+            
+        print(f"[{status}] '{original_text}'")
+        print(f"   True: {true_label.upper()} | Pred: {pred.upper()} | Confidence: {confidence:.1%}")
+    
+    print(f"\nModel performance on short messages: {correct_predictions}/8 correct")
+    
+   
 if __name__ == "__main__":
-    # Run the Flask API
+   
+    analyze_tricky_dataset_examples()
+    
     app.run(debug=True)
