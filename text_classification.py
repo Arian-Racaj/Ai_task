@@ -18,8 +18,7 @@ from flask import Flask, request, jsonify
 
 
 # Here is the Setup & Load Dataset
-# -------------------------
-# Download stopwords if not already
+
 nltk.download("stopwords", quiet=True)
 stop_words = set(stopwords.words("english"))
 
